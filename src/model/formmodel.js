@@ -1,47 +1,45 @@
-const  mongoose = require('mongoose')
-const moment = require('moment')
+const mongoose = require("mongoose");
+const moment = require("moment");
 
-const userschema = new mongoose.Schema({
-
-    userRegistration : {
-        type:String,
-        required:true
+const userschema = new mongoose.Schema(
+  {
+    userRegistration: {
+      type: String,
+      required: true,
     },
-    username:{
-        type:String,
-        required:true,
-        unique:true
-    },
-
-    formnumber:{
-        type:Number,
-        required:true,
-        min:1
+    username: {
+      type: String,
+      required: true,
+      unique: true,
     },
 
-    taskname:{
-        type:String,
-        required:true
-    },
-    taskdescription:{
-        type:String,
-        required:true
+    formnumber: {
+      type: Number,
+      required: true,
+      min: 1,
     },
 
-    formdatetime:{
-        type: Date,
-        default: moment().toDate()
-                                        
+    taskname: {
+      type: String,
+      required: true,
+    },
+    taskdescription: {
+      type: String,
+      required: true,
     },
 
-    isDeleted:{
-        type:Boolean,
-        default:false
-    }
-}, 
+    formdatetime: {
+      type: Date,
+      default: moment().toDate(),
+    },
 
-{timestamps:true}
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
-)
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('user',userschema)
+module.exports = mongoose.model("user", userschema);
