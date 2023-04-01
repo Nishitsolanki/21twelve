@@ -166,10 +166,12 @@ const getbyparam = async function (req, res) {
 const updateuser = async function (req, res) {
   try {
     let data = req.body;
-    let userId = req.params.userId;
+    let userId = req.params.id;
     let { userRegistration, username, taskname, taskdescription } = data;
 
     let updates = {};
+
+
  
     if (username) {
       if (!isValid(username)) {
@@ -259,7 +261,7 @@ let deleteuser = async function (req, res) {
         .send({ status: false, message: "userId is required" });
     }
 
-    let exist = await formmodel.findOne({ _id: userId });
+    let exist = await formmodel.findOne({ _id: userId, isDeleted: false });
     if (!exist) {
       return res
         .status(404)
