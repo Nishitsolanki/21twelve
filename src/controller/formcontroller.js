@@ -1,9 +1,9 @@
 const formmodel = require("../model/formmodel");
 const jwt = require("jsonwebtoken");
-
 const { isValid,isvalidObjectId} = require("../validation/validator");
 
 const createuser = async function (req, res) {
+
   try {
     const data = req.body;
     const { userRegistration, username, taskname, taskdescription } = data;
@@ -166,7 +166,7 @@ const getbyparam = async function (req, res) {
 const updateuser = async function (req, res) {
   try {
     let data = req.body;
-    let userId = req.params.id;
+    let userId = req.params.userId;
     let { userRegistration, username, taskname, taskdescription } = data;
 
     let updates = {};
