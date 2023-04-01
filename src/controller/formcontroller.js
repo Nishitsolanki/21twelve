@@ -1,5 +1,5 @@
 const formmodel = require("../model/formmodel");
-const jasonwebtoken = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { isValid,isvalidObjectId} = require("../validation/validator");
 
