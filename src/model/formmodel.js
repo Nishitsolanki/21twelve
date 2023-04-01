@@ -33,10 +33,7 @@ const userschema = new mongoose.Schema(
       default: moment().toDate(),
     },
 
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
+    
   },
 
   { timestamps: true }

@@ -1,6 +1,6 @@
 const formmodel = require("../model/formmodel");
-const jasonwebtoken = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const { isValid,isvalidObjectId} = require("../validation/validator");
 
 const createuser = async function (req, res) {
@@ -61,9 +61,6 @@ const createuser = async function (req, res) {
     ob.taskdescription = taskdescription;
     ob.formnumber = finduser;
 
-    let secured = await bcrypt.hash(username, 10);
-    data.username = secured;
-
     const create = await formmodel.create(ob);
     return res
       .status(201)
@@ -106,11 +103,6 @@ const userlogin = async function (req, res) {
     const exist = await formmodel.findOne({ username: username });
     if (!exist) {
       return res.status(401).send({ status: false, msg: "invalid creditial" });
-    }
-
-    let secure = await bcrypt.compare(username, exist.username);
-    if (!secure) {
-      return res.status(400).send({ status: false, msg: "wrong password" });
     }
 
     let token = jwt.sign({ userId: exist._id }, "Secretkeyof21twelve", {
@@ -157,7 +149,7 @@ const getbyparam = async function (req, res) {
         });
     }
 
-    let get = await formmodel.find({ _id: userId });
+    let get = await formmodel.findOne({ _id: userId });
     if (!get) {
       return res
         .status(404)
@@ -174,15 +166,30 @@ const getbyparam = async function (req, res) {
 const updateuser = async function (req, res) {
   try {
     let data = req.body;
-    let userId = req.params.id;
+    let userId = req.params.userId;
     let { userRegistration, username, taskname, taskdescription } = data;
 
     let updates = {};
+ 
+    if (username) {
+      if (!isValid(username)) {
+        return res
+          .status(400)
+          .send({ status: false, message: "username is invalid!" });
+      }
 
-    if (!userId) {
-      return res
-        .status(400)
-        .send({ status: false, message: "userId is required" });
+      updates.username = username;
+    }
+
+    
+    if (taskdescription) {
+      if (!isValid(taskdescription)) {
+        return res
+          .status(400)
+          .send({ status: false, message: "taskdescription is invalid!" });
+      }
+
+      updates.taskdescription = taskdescription
     }
 
     let exist = await formmodel.findOne({ _id: userId });
@@ -252,17 +259,16 @@ let deleteuser = async function (req, res) {
         .send({ status: false, message: "userId is required" });
     }
 
-    let exist = await formmodel.findOne({ _id: userId, isDeleted: false });
+    let exist = await formmodel.findOne({ _id: userId });
     if (!exist) {
       return res
         .status(404)
         .send({ status: false, message: `this ${userId} does n't exist!` });
     }
 
-    let deleteu = await formmodel.findOneAndUpdate(
-      { _id: userId },
-      { $set: { isDeleted: true } },
-      { new: true }
+    let deleteu = await formmodel.deleteOne(
+      { _id: userId }
+    
     );
 
     return res
