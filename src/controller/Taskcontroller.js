@@ -180,20 +180,6 @@ const createusers = async function (req, res) {
           .send({ status: false, message: `this ${taskId} does n't exist!` });
       }
   
-      if (user) {
-        if (!isValid(user)) {
-          return res
-            .status(400)
-            .send({
-              status: false,
-              message: "userregestration is invalid is invalid!",
-            });
-        }
-  
-       
-        
-        updates.usern = user
-      }
   
       if (taskname) {
         if (!isValid(taskname)) {
@@ -237,7 +223,7 @@ const createusers = async function (req, res) {
       if (!exist) {
         return res
           .status(404)
-          .send({ status: false, message: `this ${taskIdId} does n't exist!` });
+          .send({ status: false, message: `this ${taskId} does n't exist!` });
       }
   
       let deleteu = await taskmodel.deleteOne(
