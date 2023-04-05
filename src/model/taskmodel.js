@@ -24,10 +24,7 @@ const taskSchema = new mongoose.Schema(
       type: Date,
       default:Date.now,
     },
-    time :{
-        type:String,
-        required:true
-    }
+   
   },
   { timestamps: true }
 );
