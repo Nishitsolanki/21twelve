@@ -50,7 +50,7 @@ const createusers = async function (req, res) {
           
         
         if (!moment(formdateTime, "YYYY-MM-DD", true).isValid()) {
-            return res.status(400).send({ status: false, msg: "releasedAt should be in YYYY-MM-DD format" })
+            return res.status(400).send({ status: false, msg: "formdate should be in YYYY-MM-DD format" })
         }
         let date = moment().format("YYYY-MM-DD")
         if (!moment(formdateTime).isAfter(date)) {
