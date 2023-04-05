@@ -1,3 +1,5 @@
+
+
 const mongoose = require("mongoose");
 
 const isValid = function (value) {
@@ -10,4 +12,10 @@ const isvalidObjectId = function (objectId) {
     return mongoose.Types.ObjectId.isValid(objectId);
   };
 
-module.exports = {isValid,isvalidObjectId}
+  const isValidPassword = function (pass) {
+    //if (/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$/.test(pass)) return true;
+    if (/^[a-zA-Z0-9!@#$%^&*]{8,15}$/.test(pass)) return true;
+    return false;
+  };
+
+module.exports = {isValid,isvalidObjectId,isValidPassword}

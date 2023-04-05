@@ -1,21 +1,20 @@
+const {createuser,userlogin, getbyparam,} = require('../controller/usercontroller')
+const {createusers,updateuser,deleteuser ,gettask} = require('../controller/Taskcontroller')
 
-const express =require("express")
-const router=express.Router()
-const {createuser,userlogin, getbyparam,updateuser, deleteuser} = require('../controller/formcontroller')
+const router = require('express').Router()
 
+//user
 
-router.post('/createuser', createuser)
-router.post('/userlogin',userlogin)
-router.get('/getalluser/:userId', getbyparam )
-router.put('/updateuser/:userId',updateuser)
-router.delete('/deleteuser/:userId', deleteuser)
+router.post('/register' ,createuser)
+router.post('/login', userlogin)
+router.get('/get/:userId' ,getbyparam)
 
-router.all("/**", function (req, res) {
-    res.status(400).send({
-      status: false,
-      msg: "The api you are requesting is not available",
-    });
-  });
+//task
+
+router.post('/create', createusers)
+router.put('/puts/:taskId' , updateuser)
+router.delete('/delete/:taskId' ,deleteuser)
+router.get('/gets/:taskId', gettask)
 
 
 module.exports=router
